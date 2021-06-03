@@ -207,8 +207,8 @@ TableProcessor.prototype.drawHorizontalLine = function (lineIndex, writer, overr
 	}
 };
 
-TableProcessor.prototype.drawVerticalLine = function (x, y0, y1, vLineIndex, writer, rowIndex) {
-	var width = this.layout.vLineWidth(vLineIndex, this.tableNode, rowIndex);
+TableProcessor.prototype.drawVerticalLine = function (x, y0, y1, vLineIndex, writer) {
+	var width = this.layout.vLineWidth(vLineIndex, this.tableNode);
 	if (width === 0) {
 		return;
 	}
@@ -219,7 +219,7 @@ TableProcessor.prototype.drawVerticalLine = function (x, y0, y1, vLineIndex, wri
 		y1: y0,
 		y2: y1,
 		lineWidth: width,
-		lineColor: typeof this.layout.vLineColor === 'function' ? this.layout.vLineColor(vLineIndex, this.tableNode) : this.layout.vLineColor, rowIndex
+		lineColor: typeof this.layout.vLineColor === 'function' ? this.layout.vLineColor(vLineIndex, this.tableNode) : this.layout.vLineColor
 	}, false, true);
 };
 
@@ -299,7 +299,7 @@ TableProcessor.prototype.endRow = function (rowIndex, writer, pageBreaks) {
 			}
 
 			if (leftBorder || rightBorder) {
-				this.drawVerticalLine(xs[i].x, y1 - hzLineOffset, y2 + this.bottomLineWidth, xs[i].index, writer, rowIndex);
+				this.drawVerticalLine(xs[i].x, y1 - hzLineOffset, y2 + this.bottomLineWidth, xs[i].index, writer);
 			}
 
 			if (i < l - 1) {
@@ -308,7 +308,7 @@ TableProcessor.prototype.endRow = function (rowIndex, writer, pageBreaks) {
 					fillColor = typeof this.layout.fillColor === 'function' ? this.layout.fillColor(rowIndex, this.tableNode) : this.layout.fillColor;
 				}
 				if (fillColor) {
-					var wBorder = (leftBorder || rightBorder) ? this.layout.vLineWidth(colIndex, this.tableNode, rowIndex) : 0;
+					var wBorder = (leftBorder || rightBorder) ? this.layout.vLineWidth(colIndex, this.tableNode) : 0;
 					var xf = xs[i].x + wBorder;
 					var yf = this.dontBreakRows ? y1 : y1 - hzLineOffset;
 					writer.addVector({
