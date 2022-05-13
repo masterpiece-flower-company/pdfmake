@@ -255,11 +255,11 @@ class TableProcessor {
 	}
 
 	drawVerticalLine(x, y0, y1, vLineColIndex, writer, vLineRowIndex, beforeVLineColIndex) {
-		let width = this.layout.vLineWidth(vLineColIndex, this.tableNode);
+		let width = this.layout.vLineWidth(vLineColIndex, this.tableNode, vLineRowIndex);
 		if (width === 0) {
 			return;
 		}
-		let style = this.layout.vLineStyle(vLineColIndex, this.tableNode);
+		let style = this.layout.vLineStyle(vLineColIndex, this.tableNode, vLineRowIndex);
 		let dash;
 		if (style && style.dash) {
 			dash = style.dash;
@@ -443,12 +443,12 @@ class TableProcessor {
 						fillOpacity = typeof this.layout.fillOpacity === 'function' ? this.layout.fillOpacity(rowIndex, this.tableNode, colIndex) : this.layout.fillOpacity;
 					}
 					if (fillColor) {
-						let widthLeftBorder = leftCellBorder ? this.layout.vLineWidth(colIndex, this.tableNode) : 0;
+						let widthLeftBorder = leftCellBorder ? this.layout.vLineWidth(colIndex, this.tableNode,	rowIndex) : 0;
 						let widthRightBorder;
 						if ((colIndex === 0 || colIndex + 1 == body[rowIndex].length) && !rightCellBorder) {
-							widthRightBorder = this.layout.vLineWidth(colIndex + 1, this.tableNode);
+							widthRightBorder = this.layout.vLineWidth(colIndex + 1, this.tableNode, rowIndex);
 						} else if (rightCellBorder) {
-							widthRightBorder = this.layout.vLineWidth(colIndex + 1, this.tableNode) / 2;
+							widthRightBorder = this.layout.vLineWidth(colIndex + 1, this.tableNode, rowIndex) / 2;
 						} else {
 							widthRightBorder = 0;
 						}
